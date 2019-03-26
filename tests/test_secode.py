@@ -13,6 +13,10 @@ from secode.core import base64_decode, base64_encode
         'yamls/test_multiple.yaml',
         'yamls/test_multiple_base64.yaml'
     ),
+    (
+        'yamls/test_documents.yaml',
+        'yamls/test_documents_base64.yaml'
+    ),
 ])
 def test_encode_decode(file_path, file_path_expected):
     # encode
