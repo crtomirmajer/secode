@@ -1,3 +1,7 @@
+# Secode
+
+[![CircleCI](https://circleci.com/gh/crtomirmajer/secode/tree/master.svg?style=shield)](https://circleci.com/gh/crtomirmajer/secode/tree/master)
+
 ## About
 **secode**, short for _secrets encode_, is a utility for `base64` encoding Kubernetes secrets.
 It takes a `.yaml` file as an input and replaces values with `base64` encoded strings.
