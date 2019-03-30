@@ -1,1 +1,1 @@
-from secode.core import encode_secrets
+from secode.core import encode_file, encode_stream

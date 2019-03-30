@@ -1,30 +1,39 @@
 import base64
-import sys
 
 from ruamel.yaml import RoundTripDumper, YAML, dump_all
 
 
-def encode_secrets(file_path, decode=False):
+def encode_file(file_path, decode=False):
+    with open(file_path, 'r') as stream:
+        payload = _parse_yaml(stream.read())
+    return encode_payload(payload, decode)
+
+
+def encode_stream(stream, decode=False):
+    lines = [line for line in stream]
+    payload = ''.join(lines)
+    payload = _parse_yaml(payload)
+    return encode_payload(payload, decode)
+
+
+def encode_payload(payload, decode=False):
     encoder = base64_decode if decode else base64_encode
-    original_payload = read_yaml(file_path)
     encoded_payload = []
-    for document in original_payload:
-        encoded_payload.append(encode(document, encoder))
+    for document in payload:
+        encoded_payload.append(_encode(document, encoder))
     return dump_all(encoded_payload, Dumper=RoundTripDumper)
 
 
-def read_yaml(file_path):
-    with open(file_path, 'r') as stream:
-        yaml = YAML()
-        docs = yaml.load_all(stream.read())
-        for doc in docs:
-            yield doc
+def _parse_yaml(payload):
+    yaml = YAML()
+    docs = yaml.load_all(payload)
+    return docs
 
 
-def encode(payload, encoder):
+def _encode(payload, encoder):
     if 'items' in payload:
         for i, item in enumerate(payload['items']):
-            payload['items'][i] = encode(item, encoder)
+            payload['items'][i] = _encode(item, encoder)
     elif payload.get('kind') == 'Secret':
         for key in payload['data']:
             payload['data'][key] = encoder(payload['data'][key])
@@ -42,10 +51,10 @@ def base64_encode(value):
 
 def base64_decode(payload):
     value = base64.b64decode(payload).decode('utf-8')
-    return downcast(value)
+    return _downcast(value)
 
 
-def downcast(value):
+def _downcast(value):
     if value.isnumeric():
         return int(value)
     try:

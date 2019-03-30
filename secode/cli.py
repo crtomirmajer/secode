@@ -1,12 +1,14 @@
 import argparse
+import sys
 
-from secode.core import encode_secrets
+from secode.core import encode_file, encode_stream
 
 PARSER = argparse.ArgumentParser()
 PARSER.add_argument(
     'file_path',
     metavar='file_path',
-    help='yaml file with K8S secrets'
+    help='yaml file with K8S secrets',
+    nargs='?'
 )
 PARSER.add_argument(
     '-d', '--decode',
@@ -17,5 +19,8 @@ PARSER.add_argument(
 
 def run():
     args = PARSER.parse_args()
-    content = encode_secrets(args.file_path, args.decode)
+    if args.file_path:
+        content = encode_file(args.file_path, args.decode)
+    else:
+        content = encode_stream(sys.stdin, args.decode)
     print(content, end='')
