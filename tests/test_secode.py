@@ -1,10 +1,9 @@
 import pytest
 
-from secode.cli import encode_secrets
-from secode.core import base64_decode, base64_encode
+from secode.cli import encode_file
+from secode.core import base64_decode, base64_encode, encode_stream
 
-
-@pytest.mark.parametrize('file_path, file_path_expected', [
+_TEST_FILES = [
     (
         'yamls/test_single.yaml',
         'yamls/test_single_base64.yaml'
@@ -17,20 +16,42 @@ from secode.core import base64_decode, base64_encode
         'yamls/test_documents.yaml',
         'yamls/test_documents_base64.yaml'
     ),
-])
-def test_encode_decode(file_path, file_path_expected):
+]
+
+
+@pytest.mark.parametrize('file_path, encoded_file_path', _TEST_FILES)
+def test_encode_decode_file(file_path, encoded_file_path):
     # encode
-    encoded = encode_secrets(file_path)
-    with open(file_path_expected) as f:
+    encoded = encode_file(file_path)
+    with open(encoded_file_path) as f:
         expected = f.read()
-    
+
     assert encoded == expected
-    
+
     # decode
-    decoded = encode_secrets(file_path_expected, decode=True)
+    decoded = encode_file(encoded_file_path, decode=True)
     with open(file_path) as f:
         expected = f.read()
-    
+
+    assert decoded == expected
+
+
+@pytest.mark.parametrize('file_path, encoded_file_path', _TEST_FILES)
+def test_encode_decode_stream(file_path, encoded_file_path):
+    # encode
+    with open(file_path) as stream:
+        encoded = encode_stream(stream)
+    with open(encoded_file_path) as f:
+        expected = f.read()
+
+    assert encoded == expected
+
+    # decode
+    with open(encoded_file_path) as stream:
+        decoded = encode_stream(stream, decode=True)
+    with open(file_path) as f:
+        expected = f.read()
+
     assert decoded == expected
 
 
