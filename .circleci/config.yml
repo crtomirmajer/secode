@@ -1,0 +1,36 @@
+version: 2
+
+machine: &machine
+  working_directory:
+  docker:
+  - image: circleci/python:3.6.1
+
+cache: &cache
+  key: v1-dependencies-{{ checksum "setup.py" }}
+
+jobs:
+  unit-tests:
+    <<: *machine
+    steps:
+    - checkout
+    - restore_cache:
+        <<: *cache
+    - run:
+        name: install dependencies
+        command: |
+          python3 -m venv venv
+          . venv/bin/activate
+          pip install -e .
+          pip install -e .[unit-tests]
+          cd tests
+          pytest
+    - save_cache:
+        <<: *cache
+        paths:
+        - ./venv
+
+workflows:
+  version: 2
+  on-every-push:
+    jobs:
+    - unit-tests
