@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: secret_1
+type: Opaque
+data:
+  secret_val_1: dGhpcy1pcy1zZWNyZXQtMQ==
+  secret_val_2: MTMzNw==
+  secret_val_3: di9wcDtRVCg8IV1ofEYlQEc1LDlnLCVxZWg5ait1YlEzZE1ceD96XEh1Ij5hW1Q3Q0U4X2pxNmFvJHxTIV1rS3QleWdEWTNbeCJFcXtjLCx8KU1lPTVoIWw7blQxMkwiMCR+fDxMYSFQJlZNLTRLcnVmX3hFVlhDNDhCbiJ3ZnJOZEZHbn4jImxTTExXXG5iUkZXV11JWmtna1dhci42WHo7PiJWVWwnQ2xAUi0mXHEtX2dBNmdGT2UkdlVYIi8zTzcycXFlU2haLiNyeUhyTnpxSyQ2KDlvPXYvY0EwU1M2TXUnMn1ZR3d7KUo0VA==
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: secret_2
+type: Opaque
+data:
+  secret_val_1: SzJmK3N9VEIoOWBWUyFYUUJ8O2w=
+  secret_val_2: RDk4anhden0+KFdcRyxiXFZFag==

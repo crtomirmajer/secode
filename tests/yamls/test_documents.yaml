@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: secret_1
+type: Opaque
+data:
+  secret_val_1: this-is-secret-1
+  secret_val_2: 1337
+  secret_val_3: v/pp;QT(<!]h|F%@G5,9g,%qeh9j+ubQ3dM\x?z\Hu">a[T7CE8_jq6ao$|S!]kKt%ygDY3[x"Eq{c,,|)Me=5h!l;nT12L"0$~|<La!P&VM-4Kruf_xEVXC48Bn"wfrNdFGn~#"lSLLW\nbRFWW]IZkgkWar.6Xz;>"VUl'Cl@R-&\q-_gA6gFOe$vUX"/3O72qqeShZ.#ryHrNzqK$6(9o=v/cA0SS6Mu'2}YGw{)J4T
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: secret_2
+type: Opaque
+data:
+  secret_val_1: K2f+s}TB(9`VS!XQB|;l
+  secret_val_2: D98jx]z}>(W\G,b\VEj

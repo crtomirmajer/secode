@@ -1,20 +1,24 @@
 import base64
+import sys
 
-from ruamel.yaml import RoundTripDumper, YAML, dump
+from ruamel.yaml import RoundTripDumper, YAML, dump_all
 
 
 def encode_secrets(file_path, decode=False):
     encoder = base64_decode if decode else base64_encode
     original_payload = read_yaml(file_path)
-    encoded_payload = encode(original_payload, encoder)
-    content = dump(encoded_payload, Dumper=RoundTripDumper)
-    return content
+    encoded_payload = []
+    for document in original_payload:
+        encoded_payload.append(encode(document, encoder))
+    return dump_all(encoded_payload, Dumper=RoundTripDumper)
 
 
 def read_yaml(file_path):
     with open(file_path, 'r') as stream:
         yaml = YAML()
-        return yaml.load(stream.read())
+        docs = yaml.load_all(stream.read())
+        for doc in docs:
+            yield doc
 
 
 def encode(payload, encoder):
