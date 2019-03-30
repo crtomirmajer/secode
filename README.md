@@ -3,8 +3,10 @@
 [![CircleCI](https://circleci.com/gh/crtomirmajer/secode/tree/master.svg?style=shield)](https://circleci.com/gh/crtomirmajer/secode/tree/master)
 
 ## About
-**secode**, short for _secrets encode_, is a utility for `base64` encoding Kubernetes secrets.
-It takes a `.yaml` file as an input and replaces values with `base64` encoded strings.
+**secode**, short for _secrets encode_, is a utility for `base64` encoding/decoding Kubernetes secrets.
+It takes a `.yaml` file or a stream as an input and replaces values with `base64` encoded/decoded strings.
+
+Also works with multiple `Secret` definitions per file - `kind: List` or  `---` separated.
 
 **Requires Python 3+**
 
@@ -12,7 +14,7 @@ It takes a `.yaml` file as an input and replaces values with `base64` encoded st
 
 Using `pip`:
 
-`pip install git+https://github.com/crtomirmajer/secode.git`
+`sudo pip install git+http://github.com/crtomirmajer/secode.git`
 
 ## Usage
 
@@ -56,4 +58,8 @@ Use `-d` (`--decode`) flag to get the original:
 secode secrets_base64.yaml -d
 ```
 
-Works with multiple secrets per file (`kind: List`) also.
+Pipe `kubectl get secret` output through `secode -d` to decode a deployed K8s secret on-the-fly:
+
+```bash
+kubectl get secret <name-of-the-secret> -o yaml | secode -d
+```
