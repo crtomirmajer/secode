@@ -21,7 +21,7 @@ setup(
         ],
     ),
     install_requires=[
-        'ruamel.yaml==0.15.80'
+        'ruamel.yaml~=0.16.12'
     ],
     extras_require={
         'unit-tests': [

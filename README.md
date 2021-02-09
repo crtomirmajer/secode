@@ -12,9 +12,9 @@ Also works with multiple `Secret` definitions per file - `kind: List` or  `---` 
 
 ## Install
 
-Using `pip`:
+Using `pip3`:
 
-`sudo pip install git+http://github.com/crtomirmajer/secode.git`
+`pip3 install git+http://github.com/crtomirmajer/secode.git`
 
 ## Usage
 
