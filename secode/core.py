@@ -1,6 +1,7 @@
 import base64
+from io import StringIO
 
-from ruamel.yaml import RoundTripDumper, YAML, dump_all
+from ruamel.yaml import YAML
 
 
 def encode_file(file_path, decode=False):
@@ -21,7 +22,10 @@ def encode_payload(payload, decode=False):
     encoded_payload = []
     for document in payload:
         encoded_payload.append(_encode(document, encoder))
-    return dump_all(encoded_payload, Dumper=RoundTripDumper)
+    yaml = YAML()
+    yaml_str = StringIO()
+    yaml.dump_all(encoded_payload, yaml_str)
+    return yaml_str.getvalue()
 
 
 def _parse_yaml(payload):
